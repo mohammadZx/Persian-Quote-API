@@ -25,6 +25,21 @@ export const CHANGE_TYPES: Record<ChangeType, { label: string; order: number }> 
 
 export const CHANGELOG: ChangelogVersion[] = [
   {
+    version: "۳.۶.۱",
+    isoDate: "2026-09-04",
+    date: "۱۴ شهریور ۱۴۰۵",
+    changes: [
+      {
+        type: "changed",
+        description: "صفحه اصلی، سربرگ ناوبری و پانوشت با رویکرد مینیمال، علمی و پژوهشی بازطراحی شدند و تزیینات غیرضروری حذف شدند.",
+      },
+      {
+        type: "changed",
+        description: "توضیحات و لحن فنی صفحه ساختار موتور پالایش و به استانداردهای مستندسازی دانشگاهی نزدیک‌تر شد.",
+      },
+    ],
+  },
+  {
     version: "۳.۶.۰",
     isoDate: "2026-09-04",
     date: "۱۴ شهریور ۱۴۰۵",

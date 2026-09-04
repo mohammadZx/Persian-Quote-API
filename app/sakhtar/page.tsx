@@ -171,11 +171,11 @@ export default function SakhtarPage() {
             نسخه ۰.۰.۱-beta
           </Badge>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-foreground mb-3 leading-tight">
-            موتور <span className="text-amber-600 dark:text-amber-500">تیغ</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 leading-tight tracking-tight">
+            معماری فنی موتور <span className="text-foreground">تیغ</span>
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto leading-relaxed mb-6">
-            اولین موتور API متن‌باز فارسی که با هر نوع داده فارسی سازگار است و از جایگزین‌های خارجی سریع‌تر عمل می‌کند. طراحی و پیاده‌سازی توسط <span className="text-foreground font-medium">آرسام آدینه</span>.
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed mb-6">
+            موتور مستقل مبتنی بر حافظه برای پردازش و بازیابی سریع داده‌های متنی فارسی با ساختار داده ترای، حافظه پنهان LRU و کنترل جریان داده.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
