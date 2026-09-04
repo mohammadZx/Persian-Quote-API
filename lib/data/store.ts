@@ -508,13 +508,64 @@ export function getByCategory(category: string, sp: URLSearchParams): ListResult
 }
 
 export function searchQuotes(sp: URLSearchParams): ListResult<NormalizedQuote> {
-  const q = normalizeText((sp.get("q") || sp.get("query") || "").trim());
+  const rawQuery = (sp.get("q") || sp.get("query") || "").trim();
+  const q = normalizeText(rawQuery);
   const opts = parseOptions(sp);
   if (!q) {
     // بدون پرس‌وجو: تمام مجموعه‌ها (تصادفی در صورت درخواست)
     return resolve(all, opts);
   }
-  const filtered = all.filter((item) => item.search.includes(q));
+
+  // تفکیک پرس‌وجو به کلمات مستقل برای جستجوی چندکلمه‌ای
+  const terms = q.split(/\s+/).filter(Boolean);
+
+  // جستجوی دقیق چندکلمه‌ای و امتیازدهی به نتایج
+  const scoredItems: Array<{ quote: NormalizedQuote; score: number }> = [];
+
+  for (const item of all) {
+    let score = 0;
+    const authorTarget = normalizeText([item.author, item.author_english, item.poet, item.poet_english].filter(Boolean).join(" "));
+    const titleTarget = normalizeText([item.title, item.category, ...item.tags].filter(Boolean).join(" "));
+    const textTarget = normalizeText(item.text_persian + " " + (item.text_english || ""));
+
+    // تطبیق تمام واژه‌ها
+    let allMatched = true;
+    for (const term of terms) {
+      if (item.search.includes(term)) {
+        // امتیازدهی بر اساس اهمیت بخش
+        if (authorTarget.includes(term)) {
+          score += 15;
+        } else if (titleTarget.includes(term)) {
+          score += 8;
+        } else if (textTarget.includes(term)) {
+          score += 3;
+        } else {
+          score += 1;
+        }
+      } else {
+        // اگر کلمه مستقیماً نبود، تطبیق فازی با شاعر بررسی می‌شود
+        if (authorTarget && poetScore(term, authorTarget) >= (term.length < 4 ? 0.9 : 0.75)) {
+          score += 10;
+        } else {
+          allMatched = false;
+          break;
+        }
+      }
+    }
+
+    if (allMatched && score > 0) {
+      // پاداش برای تطبیق عبارت کامل پشت‌سرهم
+      if (item.search.includes(q)) {
+        score += 25;
+      }
+      scoredItems.push({ quote: item, score });
+    }
+  }
+
+  // مرتب‌سازی بر اساس امتیاز نزولی
+  scoredItems.sort((a, b) => b.score - a.score);
+  const filtered = scoredItems.map((entry) => entry.quote);
+
   return resolve(filtered, opts);
 }
 

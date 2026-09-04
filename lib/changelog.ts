@@ -25,6 +25,21 @@ export const CHANGE_TYPES: Record<ChangeType, { label: string; order: number }> 
 
 export const CHANGELOG: ChangelogVersion[] = [
   {
+    version: "۳.۶.۰",
+    isoDate: "2026-09-04",
+    date: "۱۴ شهریور ۱۴۰۵",
+    changes: [
+      {
+        type: "added",
+        description: "محیط آزمون‌های خودکار با دستور آزمون و فایل‌های آزمون برای مسیریاب، کش، محدودکننده نرخ، مدارشکن و مخزن داده افزوده شد.",
+      },
+      {
+        type: "changed",
+        description: "موتور جستجوی اشعار به الگوریتم تطبیق چندکلمه‌ای با تفکیک واژگان، رتبه‌بندی وزنی بخش‌های شعر و پشتیبانی از تطبیق فازی نام شاعران مجهز شد.",
+      },
+    ],
+  },
+  {
     version: "۳.۵.۰",
     isoDate: "2026-08-19",
     date: "۲۸ مرداد ۱۴۰۵",
